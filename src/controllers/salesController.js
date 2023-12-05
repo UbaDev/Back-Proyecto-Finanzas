@@ -122,29 +122,15 @@ async function getTransactions(req, res) {
 }
 
 async function getGraficaData(req, res) {
-
-  
   try {
+    // Obtener la referencia a la colección del usuario
+    const userCollection = db
+      .collection("users")
+      .doc(req.params.userId)
+      .collection("grafica");
 
-
-    let graficaQuery = db
-      .collection("grafica")
-
-    const filter = req.query.filter;
-
-    // Aplicar filtro si está presente
-    if (filter === "lastWeek") {
-      const lastWeek = new Date();
-      lastWeek.setDate(lastWeek.getDate() - 7);
-      graficaQuery = graficaQuery.where("fecha", ">=", lastWeek);
-    } else if (filter === "lastMonth") {
-      const lastMonth = new Date();
-      lastMonth.setMonth(lastMonth.getMonth() - 1);
-      graficaQuery = graficaQuery.where("fecha", ">=", lastMonth);
-    }
-
-    // Obtener todos los documentos de la colección "grafica"
-    const graficaSnapshot = await graficaQuery.get();
+    // Obtener todos los documentos de la colección del usuario
+    const graficaSnapshot = await userCollection.get();
 
     // Mapear los documentos a un array de objetos
     const graficaData = graficaSnapshot.docs.map((doc) => {
@@ -347,13 +333,19 @@ async function payTransaction(req, res) {
       estatus: "Pagado",
     });
 
-    const graficaData = {
-      saldoAPagar,
-      fecha: new Date(),
-      userId: req.user.userId,
-    };
+   const graficaData = {
+     saldoAPagar,
+     fecha: new Date(),
+     userId: req.user.userId,
+   };
 
-    await db.collection("grafica").add(graficaData);
+   // Crear una referencia a la colección del usuario
+   const userCollection = db
+     .collection("users")
+     .doc(req.user.userId)
+     .collection("grafica");
+
+   await userCollection.add(graficaData);
 
     console.log("Transacción pagada con éxito:", transactionId);
 
@@ -386,15 +378,19 @@ async function getUserData(req, res) {
     // Obtener datos del documento del usuario
     const userData = userDoc.data();
 
-    res.status(200).json({ displayName: userData.displayName });
+    // Devolver más datos del usuario, ajusta según tus necesidades
+    res.status(200).json({
+      userId: userId,
+      displayName: userData.displayName,
+      email: userData.email,
+      // Agrega otros campos según sea necesario
+    });
   } catch (error) {
     console.error("Error en getUserData:", error.message);
-    res
-      .status(500)
-      .json({
-        error: "Error interno del servidor.",
-        originalError: error.message,
-      });
+    res.status(500).json({
+      error: "Error interno del servidor.",
+      originalError: error.message,
+    });
   }
 }
 

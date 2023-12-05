@@ -58,9 +58,11 @@ router.put(
 );
 
 router.get(
-  "/api/grafica",
+  "/api/grafica/:userId",
+  verificarAutenticacion,
   salesController.getGraficaData
 );
+
 
 router.get("/api/user", verificarAutenticacion, salesController.getUserData);
 
