@@ -1,0 +1,17 @@
+{
+  "files": {
+    "main.css": "/static/css/main.edef7fd7.css",
+    "main.js": "/static/js/main.81f072b8.js",
+    "static/media/sign.png": "/static/media/sign.f19f7162a99e3a965e49.png",
+    "static/media/logoApp.png": "/static/media/logoApp.1a8561ecc9fd3df3d5b9.png",
+    "static/media/bear.png": "/static/media/bear.11022c3990b5e50786fd.png",
+    "static/media/mastercard.png": "/static/media/mastercard.3074f66625e010fbcb96.png",
+    "index.html": "/index.html",
+    "main.edef7fd7.css.map": "/static/css/main.edef7fd7.css.map",
+    "main.81f072b8.js.map": "/static/js/main.81f072b8.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.edef7fd7.css",
+    "static/js/main.81f072b8.js"
+  ]
+}
