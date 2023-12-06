@@ -9,7 +9,6 @@ const PORT = 3000;
 
 
 const corsOptions = {
-  origin: 'http://localhost:3001',
   methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
   credentials: true,
   optionsSuccessStatus: 204,
